@@ -81,3 +81,10 @@ $ kill -SIGINT 88374
 ```
 
 After `terraform` being interrupted in the middle, `pipeform` won't just quit. Instead, it will respond to the diagnostics sent from `terraform` (once `terraform` finishes its *graceful* handling) and display the error indicators to users.
+
+
+
+#### Installation
+
+`go install github.com/magodo/pipeform@main`
+
