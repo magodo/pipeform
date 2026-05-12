@@ -76,7 +76,7 @@ type UIModel struct {
 	followed bool
 }
 
-func NewRuntimeModel(logger *log.Logger, reader reader.Reader, startTime time.Time) UIModel {
+func NewRuntimeModel(logger *log.Logger, reader reader.Reader, startTime time.Time, follow bool) UIModel {
 	t := table.New(table.WithFocused(true))
 	t.SetStyles(StyleTableFunc())
 
@@ -103,6 +103,7 @@ func NewRuntimeModel(logger *log.Logger, reader reader.Reader, startTime time.Ti
 		progress:      progress.New(),
 		paginator:     p,
 		cp:            cp,
+		followed:      follow,
 	}
 
 	return model

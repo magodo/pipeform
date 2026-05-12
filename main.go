@@ -26,6 +26,7 @@ type FlagSet struct {
 	TeePath  string
 	TimeCsv  string
 	PlainUI  bool
+	Follow   bool
 }
 
 var fset FlagSet
@@ -65,6 +66,12 @@ func main() {
 				Usage:       "The csv file that records the timing of each operation of each resource",
 				Sources:     cli.EnvVars("PF_TIME_CSV"),
 				Destination: &fset.TimeCsv,
+			},
+			&cli.BoolFlag{
+				Name:        "follow",
+				Usage:       "Enable follow mode, automatically scrolling the table to the latest entry",
+				Sources:     cli.EnvVars("PF_FOLLOW"),
+				Destination: &fset.Follow,
 			},
 			&cli.BoolFlag{
 				Name:        "plain-ui",
@@ -121,7 +128,7 @@ func main() {
 
 				model = m
 			} else {
-				m := ui.NewRuntimeModel(logger, reader, startTime)
+				m := ui.NewRuntimeModel(logger, reader, startTime, fset.Follow)
 				tm, err := tea.NewProgram(m, tea.WithInputTTY(), tea.WithAltScreen()).Run()
 				if err != nil {
 					return fmt.Errorf("Error running program: %v\n", err)
